@@ -76,6 +76,37 @@ def show_game_history(game_history):
     """)
             counter +=1
 
+def view_statistics_flow():
+    game_history = load_from_json()
+    game_count = len(game_history)
+    player_wins,computer_wins,draws = calculate_wins(game_history)
+    player_win_stats = player_wins / len(game_history)
+    show_statistics(game_count,player_wins,computer_wins,draws,player_win_stats)
+
+def show_statistics(game_count,player_wins,computer_wins,draws,player_win_stats):
+    print(f"""
+NUMBER OF GAMES: {game_count}
+PLAYER WINS: {player_wins}
+COMPUTER WINS: {computer_wins}
+DRAWS: {draws}
+PLAYER WIN STATS: {player_win_stats}%
+""")
+def calculate_wins(game_history):
+    player_wins = 0
+    computer_wins = 0
+    draws = 0
+    for game in game_history:
+        if game["winner"] == "Computer":
+            computer_wins +=1
+        elif game["winner"] == "Draw":
+            draws += 1
+        else:
+            player_wins +=1
+    return player_wins,computer_wins,draws
+    
+
+
+
 
 def update_json_file(game_results):
     my_file = Path(__file__).parent.parent / "data/game_history.json"
@@ -105,8 +136,8 @@ def show_end_game(name,player_score,computer_score):
           GAME OVER
 ================================
 
-{name}:    2 points
-Computer: 1 points
+{name.upper()}: {player_score} points
+Computer: {computer_score} points
 
 WINNER: {name if player_score > computer_score else "Computer" if computer_score > player_score else "Tie Game"}!
 

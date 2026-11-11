@@ -58,5 +58,41 @@
         "winner": "Computer"
       }
     ]
+  },
+  {
+    "player_name": "Gad",
+    "rounds": 1,
+    "player_score": 0,
+    "computer_score": 0,
+    "winner": "Tie Game",
+    "results": [
+      {
+        "round": 1,
+        "player_dice": 3,
+        "computer_dice": 3,
+        "winner": "Draw"
+      }
+    ]
+  },
+  {
+    "player_name": "gad",
+    "rounds": 2,
+    "player_score": 0,
+    "computer_score": 2,
+    "winner": "Computer",
+    "results": [
+      {
+        "round": 1,
+        "player_dice": 2,
+        "computer_dice": 6,
+        "winner": "Computer"
+      },
+      {
+        "round": 2,
+        "player_dice": 2,
+        "computer_dice": 5,
+        "winner": "Computer"
+      }
+    ]
   }
 ]

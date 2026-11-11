@@ -1,4 +1,4 @@
-from dice_game.game import main_menu,play_flow,review_game_history_flow,check_json
+from dice_game.game import main_menu,play_flow,review_game_history_flow,check_json,view_statistics_flow
 
 def main ():
     check_json()
@@ -10,7 +10,7 @@ def main ():
             case "2":
                 review_game_history_flow()
             case "3":
-                pass
+                view_statistics_flow()
             case "4":
                 exit()
             case _:

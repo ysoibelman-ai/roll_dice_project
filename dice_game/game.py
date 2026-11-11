@@ -1,5 +1,9 @@
-from dice_game.validations import check_not_empty,check_valid_num
+from validations import *
 import random
+import json
+from pathlib import Path
+
+
 def main_menu():
     menu_selection = input("""
 ================================
@@ -39,9 +43,19 @@ def play_flow():
         game_results.append(round_)
 
     player_score, computer_score = calculate_points(game_results)
-    show_end_game()
-    show_game_results(game_results)
-    load_to_json(game_results)
+    show_end_game(name,player_score,computer_score)
+    
+    json_file = load_from_json()
+    json_file.append(game_results)
+    update_json_file(json_file)
+
+def update_json_file(game_results):
+    
+    my_file = Path(__path__).parent / "game_history.json"
+    with open(my_file, "w", encoding="utf-8") as file:
+        json.dump(game_results, file, indent=2, ensure_ascii=False)
+        
+
 
 
 def show_end_game(name,player_score,computer_score):
@@ -79,7 +93,8 @@ def create_round (name,player_score,computer_socre,round_num):
             "computer_dice": computer_socre,
             "winner": name if player_score > computer_socre else "Computer" if computer_socre > player_score else "Draw"
         }
-    return round
+    return round_
+
 
 def show_round(name,round):
     print(f"""

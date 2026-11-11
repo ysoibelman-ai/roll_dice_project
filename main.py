@@ -1,4 +1,5 @@
-from dice_game.game import main_menu,play_flow,review_game_history_flow,check_json,view_statistics_flow
+from dice_game.game import main_menu,play_flow,review_game_history_flow,view_statistics_flow
+from dice_game.game import check_json
 
 def main ():
     check_json()

@@ -1,0 +1,62 @@
+[
+  {
+    "player_name": "yaakov",
+    "rounds": 3,
+    "player_score": 2,
+    "computer_score": 1,
+    "winner": "yaakov",
+    "results": [
+      {
+        "round": 1,
+        "player_dice": 5,
+        "computer_dice": 6,
+        "winner": "Computer"
+      },
+      {
+        "round": 2,
+        "player_dice": 6,
+        "computer_dice": 3,
+        "winner": "yaakov"
+      },
+      {
+        "round": 3,
+        "player_dice": 6,
+        "computer_dice": 3,
+        "winner": "yaakov"
+      }
+    ]
+  },
+  {
+    "player_name": "ephraim",
+    "rounds": 4,
+    "player_score": 0,
+    "computer_score": 3,
+    "winner": "Computer",
+    "results": [
+      {
+        "round": 1,
+        "player_dice": 1,
+        "computer_dice": 1,
+        "winner": "Draw"
+      },
+      {
+        "round": 2,
+        "player_dice": 4,
+        "computer_dice": 6,
+        "winner": "Computer"
+      },
+      {
+        "round": 3,
+        "player_dice": 1,
+        "computer_dice": 3,
+        "winner": "Computer"
+      },
+      {
+        "round": 4,
+        "player_dice": 1,
+        "computer_dice": 3,
+        "winner": "Computer"
+      }
+    ]
+  }
+]

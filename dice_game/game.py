@@ -1,4 +1,4 @@
-from validations import *
+from dice_game.validations import *
 import random
 import json
 from pathlib import Path
@@ -17,6 +17,7 @@ def main_menu():
 
 Choose an option:
     """)
+    return menu_selection
 
 def get_input(msg):
     return input(msg)
@@ -25,9 +26,8 @@ def play_flow():
     game_results = []
     while True:
         name = get_input("Enter Name: ")
-        if not check_not_empty():
+        if not check_not_empty(name):
             continue
-        #save in dict
         break
     while True:
         num_of_rounds = get_input("Enter Number of Rounds: ")
@@ -38,23 +38,64 @@ def play_flow():
 
     for i in range (num_of_rounds):
         player,computer = roll_dice()
-        round_ = create_round(player,computer,i)
+        round_ = create_round(name,player,computer,i)
         show_round(name,round_)
         game_results.append(round_)
 
     player_score, computer_score = calculate_points(game_results)
     show_end_game(name,player_score,computer_score)
-    
+    full_game_presentation = create_game_presentation(name,num_of_rounds,player_score,computer_score,(name if player_score > computer_score else "Computer" if computer_score > player_score else "Tie Game"),game_results)
+
     json_file = load_from_json()
-    json_file.append(game_results)
-    update_json_file(json_file)
+    if json_file:
+        json_file.append(full_game_presentation)
+        update_json_file(json_file)
+    else:
+        json_file = load_from_json()
+        json_file.append(full_game_presentation)
+        update_json_file(json_file)
+
+def review_game_history_flow():
+    game_history = load_from_json()
+    if game_history == []:
+        print ("no games")
+        return
+    show_game_history(game_history)
+
+def show_game_history(game_history):
+    print ("\n----- GAME HISTORY -----")
+    counter = 1
+    for game in game_history:
+            print (f"""
+    ------- GAME {counter} -------
+    PLAYER: {game["player_name"]}
+    ROUNDS: {game["rounds"]}
+    {game["player_name"]} SCORE: {game["player_score"]} 
+    COMPUTER SCORE: {game["computer_score"]}
+    WINNER: {game["winner"]}
+    """)
+            counter +=1
+
 
 def update_json_file(game_results):
-    
-    my_file = Path(__path__).parent / "game_history.json"
-    with open(my_file, "w", encoding="utf-8") as file:
-        json.dump(game_results, file, indent=2, ensure_ascii=False)
-        
+    my_file = Path(__file__).parent.parent / "data/game_history.json"
+    try:
+        with open(my_file, "w", encoding="utf-8") as file:
+            json.dump(game_results, file, indent=2, ensure_ascii=False)
+    except json.decoder.JSONDecodeError:
+        print ("unable to update file")
+
+def load_from_json():
+    my_file = Path(__file__).parent.parent / "data/game_history.json"
+    try:
+        with open(my_file, "r", encoding="utf-8") as file:
+            json_file = json.load(file)
+            return json_file
+    except json.decoder.JSONDecodeError:
+        return None
+         
+
+
 
 
 
@@ -72,9 +113,9 @@ WINNER: {name if player_score > computer_score else "Computer" if computer_score
 Game saved successfully!
 """)
 
-
 def calculate_points(game_results):
-    player_score, computer_score = 0
+    player_score =0
+    computer_score = 0
     for round in game_results:
         if round["winner"] == "Computer":
             computer_score +=1
@@ -85,10 +126,9 @@ def calculate_points(game_results):
     return player_score,computer_score
         
 
-
 def create_round (name,player_score,computer_socre,round_num):
     round_ = {
-            "round": round_num,
+            "round": round_num+1,
             "player_dice": player_score,
             "computer_dice": computer_socre,
             "winner": name if player_score > computer_socre else "Computer" if computer_socre > player_score else "Draw"
@@ -111,3 +151,19 @@ def roll_dice():
     player_roll = random.randint(1,6)
     computer_roll = random.randint(1,6)
     return player_roll,computer_roll
+
+def create_game_presentation(name,rounds,player_score,computer_score,winner,game_results):
+    full_game ={
+    "player_name": name,
+    "rounds": rounds,
+    "player_score": player_score,
+    "computer_score": computer_score,
+    "winner": winner,
+    "results": game_results
+    }
+    return full_game
+
+def check_json():
+    json_content = load_from_json()
+    if json_content == None:
+        update_json_file([])

@@ -1,23 +1,20 @@
-from dice_game.game import main_menu,get_menu_selection
-from dice_game.validations import check_valid_menu_selection
+from dice_game.game import main_menu,play_flow,review_game_history_flow,check_json
 
 def main ():
-    main_menu()
+    check_json()
     while True:
-        menu_selection = get_menu_selection
+        menu_selection = main_menu()
         match menu_selection:
             case "1":
-                pass
+                play_flow()
             case "2":
-                pass
+                review_game_history_flow()
             case "3":
                 pass
             case "4":
                 exit()
             case _:
                 print ("\ninvalid menu selection\n")
-
-    
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,7 @@
 from dice_game.validations import *
 import random
-from outputs import show_end_game,show_game_history,show_round,show_statistics
-from helper_functions import get_input,load_from_json,update_json_file
+from dice_game.outputs import show_end_game,show_game_history,show_round,show_statistics
+from dice_game.helper_functions import get_input,load_from_json,update_json_file
 
 
 def play_flow():

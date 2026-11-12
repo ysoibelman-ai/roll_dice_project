@@ -33,7 +33,7 @@ NUMBER OF GAMES: {game_count}
 PLAYER WINS: {player_wins}
 COMPUTER WINS: {computer_wins}
 DRAWS: {draws}
-PLAYER WIN STATS: {player_win_stats}%
+PLAYER WIN STATS: {round(player_win_stats,2)*100}%
 """)
 
 def show_end_game(name,player_score,computer_score):
